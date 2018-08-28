@@ -8,4 +8,7 @@
     username: newuser
   tasks:
     - name: Add new user
-      user: name={{ username }} group=admin shell=/bin/bash
+      user: 
+        name: "{{ username }}"
+        group: admin
+        shell: /bin/bash
