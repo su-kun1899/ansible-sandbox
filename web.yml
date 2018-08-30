@@ -6,9 +6,19 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3
     username: newuser
+  vars_files:
+    - ./confidential-vars.yml
   tasks:
     - name: Add new user
-      user: 
+      user:
         name: "{{ username }}"
         group: admin
         shell: /bin/bash
+    - name: Send slack messege
+      slack:
+        token: "{{ sandbox.slack.token }}"
+        msg: 'Hello, ansible!!'
+      become: no
+      vars:
+        ansible_python_interpreter: /Users/koji-sudo/.pyenv/shims/python
+      delegate_to: localhost
