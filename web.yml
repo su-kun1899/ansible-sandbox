@@ -22,3 +22,5 @@
       vars:
         ansible_python_interpreter: /Users/koji-sudo/.pyenv/shims/python
       delegate_to: localhost
+    - name: Test debug message
+      debug: msg="Hello, debug module. It can show variables. username={{ username }}"
