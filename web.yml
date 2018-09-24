@@ -6,6 +6,9 @@
   vars:
     ansible_python_interpreter: /usr/bin/python3
     username: newuser
+    softwares:
+      - apache2
+      - python-dev
   vars_files:
     - ./confidential-vars.yml
   tasks:
@@ -24,3 +27,13 @@
       delegate_to: localhost
     - name: Test debug message
       debug: msg="Hello, debug module. It can show variables. username={{ username }}"
+    - name: /opt/foo以下にbin, conf, logディレクトリ作成
+      file: path=/opt/foo/{{ item }} state=directory
+      with_items:
+        - bin
+        - conf
+        - log
+    - name: aptでインストール
+      apt:
+        name: "{{ softwares }}"
+        update_cache: yes
