@@ -45,3 +45,15 @@
     - name: Print phone records
       user: name={{ item.key }} comment={{ item.value.name }}
       with_dict: "{{ users }}"
+    - name: 日付を得る
+      command: date "+%Y%m%d"
+      register: date
+    - debug: var=date
+    - name: 日付のファイルを作成する
+      file: path=/tmp/log.{{ date.stdout }} state=touch
+    - name: 日付が9/24だったら
+      command: echo "今日は9/24です"
+      when: date.stdout == "20180924"
+    - name: 日付が9/24ではなかったら
+      command: echo "今日は9/24ではありません"
+      when: date.stdout != "20180924"
