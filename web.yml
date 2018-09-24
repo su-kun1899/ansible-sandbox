@@ -9,6 +9,11 @@
     softwares:
       - apache2
       - python-dev
+    users:
+      ged:
+        name: Hawk
+      arpha:
+        name: Tenar
   vars_files:
     - ./confidential-vars.yml
   tasks:
@@ -37,3 +42,6 @@
       apt:
         name: "{{ softwares }}"
         update_cache: yes
+    - name: Print phone records
+      user: name={{ item.key }} comment={{ item.value.name }}
+      with_dict: "{{ users }}"
